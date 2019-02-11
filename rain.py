@@ -10,7 +10,7 @@ SCREEN_HEIGHT = 800
 class Rain:
     BACKGROUND_COLOUR = (30, 50, 50)
     RAIN_COLOUR = (0, 100, 150)
-    SPRITE_AMOUNT = 200
+    SPRITE_AMOUNT = 400
     z1 = 1
     z2 = 4
 
