@@ -18,7 +18,7 @@ class Rain:
         self.reset(window)
 
         self.sprite = arcade.Sprite("sprites/rain.png")
-        self.sprite.color = (0, 100, 150)
+        self.sprite.color = (0, 100, 150) # Why doesn't this work?
         self.sprite.center_x = self.x
         self.sprite.center_y = self.y
         self.sprite.width = self.width
