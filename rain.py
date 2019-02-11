@@ -15,7 +15,7 @@ class Rain:
     z2 = 4
 
     def __init__(self, window):
-        self.reset(window)
+        self.reset(window) # test
 
         self.sprite = arcade.Sprite("sprites/rain.png")
         self.sprite.color = (0, 100, 150) # Why doesn't this work?
@@ -44,12 +44,3 @@ class Rain:
 
         if self.y < 0:
             self.reset(window)
-
-def main():
-    window = Test(SCREEN_WIDTH, SCREEN_HEIGHT, Rain, Rain.BACKGROUND_COLOUR)
-    window.setup()
-    arcade.run()
-
-
-if __name__ == "__main__":
-    main()
