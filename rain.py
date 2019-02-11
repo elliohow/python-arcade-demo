@@ -15,7 +15,7 @@ class Rain:
     z2 = 4
 
     def __init__(self, window):
-        self.reset(window) # test
+        self.reset(window)
 
         self.sprite = arcade.Sprite("sprites/rain.png")
         self.sprite.color = (0, 100, 150) # Why doesn't this work?
