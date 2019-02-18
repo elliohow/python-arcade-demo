@@ -8,39 +8,50 @@ SCREEN_HEIGHT = 800
 
 
 class Rain:
-    BACKGROUND_COLOUR = (30, 50, 50)
+    # BACKGROUND_COLOUR = (30, 50, 50) # Original BG colour
+    BACKGROUND_COLOUR = (255, 255, 255) # New bg colour until color is fixed
     RAIN_COLOUR = (0, 100, 150)
-    SPRITE_AMOUNT = 400
+    SPRITE_AMOUNT = 1000
     z1 = 1
     z2 = 4
+    light_rainfall = True
 
     def __init__(self, window):
+        self.sprite = arcade.Sprite("sprites/rain.png")
+
         self.reset(window)
 
-        self.sprite = arcade.Sprite("sprites/rain.png")
         self.sprite.color = (0, 100, 150) # Why doesn't this work?
-        self.sprite.center_x = self.x
-        self.sprite.center_y = self.y
-        self.sprite.width = self.width
-        self.sprite.height = self.length
-
         self.sprite.update = self.update
 
     def reset(self, window):
-        self.x = randrange(0, window.fullscreen_width)
-        self.y = randrange(window.fullscreen_height, window.fullscreen_height * 4)
+        _ = self.sprite
+        _.center_x = randrange(0, window.fullscreen_width)
+        _.center_y = randrange(window.fullscreen_height, window.fullscreen_height * 1.2)
+
         self.z = random.choice(arange(self.z1, self.z2), p=[0.05, 0.25, 0.7])
-        self.length = interp(self.z, [self.z1, self.z2 - 1], [30, 10])
-        self.yspeed = interp(self.z, [self.z1, self.z2 - 1], [60, 20])
-        self.gravity = interp(self.z, [self.z1, self.z2 - 1], [0.3, 0.1])
-        self.width = interp(self.z, [self.z1, self.z2 - 1], [5, 1])
+
+        if Rain.light_rainfall == True:
+            _.center_y = randrange(window.fullscreen_height, window.fullscreen_height * 10)
+            self.initial_speed = interp(self.z, [self.z1, self.z2 - 1], [50, 20])
+        else:
+            _.center_y = randrange(window.fullscreen_height, window.fullscreen_height * 1.2)
+            self.initial_speed = interp(self.z, [self.z1, self.z2 - 1], [80, 40])
+
+        self.jitter = randrange(5, 12, 1)  # randrange only works with integers
+        self.yspeed = self.initial_speed * (self.jitter/10)  # Convert jitter to float between 0.5 and 1.2 in step 0.1
+
+        self.length = interp(self.z, [self.z1, self.z2 - 1], [40, 10])
+        self.width = interp(self.z, [self.z1, self.z2 - 1], [3, 1])
+        _.width = self.width
+        _.height = self.length
 
     def update(self, window):
-        self.y = self.y - self.yspeed
-        self.yspeed += self.gravity
+        self.sprite.center_y = self.sprite.center_y - self.yspeed
 
-        # Change Sprite location
-        self.sprite.center_y = self.y
+        if self.sprite.center_y < 0 and Rain.light_rainfall == True:
+            Rain.light_rainfall = False
+            self.reset(window)
 
-        if self.y < 0:
+        if self.sprite.center_y < 0:
             self.reset(window)
