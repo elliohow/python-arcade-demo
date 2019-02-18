@@ -33,7 +33,7 @@ class DemoWindow(arcade.Window):
 
         arcade.set_background_color(current_demo.BACKGROUND_COLOUR)
 
-        self.sprite_list = arcade.SpriteList()
+        self.sprite_list = arcade.SpriteList(use_spatial_hash=False)  # Disable collision detecting to improve speed
 
         for i in range(current_demo.SPRITE_AMOUNT):
             sprite_init = current_demo(self)
